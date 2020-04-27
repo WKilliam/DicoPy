@@ -1,24 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 27 14:50:04 2020
+
+@author: teddy
+"""
 import json
 import os
+from MotObject import *
+
+itxt = input()
+
+otxt = list(itxt)
+
+print(otxt)
 
 
-a=1
-b=2
-c = a+b
-
-
-
-
-file = open('DicoPyBook.json')
+file = open('DicoPyBook.json','r')
 
 data = json.load(file)
 
-lol = data["toto"]
+data["toto"] = otxt
 
-print(lol)
+data = json.dumps(data)
 
-#print(data)
+print(data)
 
+file.close()
 
-##file.close()
+file = open('DicoPyBook.json','w')
+
+file.write(data)
+
+file.close()
+
 

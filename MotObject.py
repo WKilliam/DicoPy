@@ -7,3 +7,6 @@ Created on Mon Apr 27 14:50:04 2020
 """
 
 
+class MotObject:
+    def __init__(self, variableClassGramaticle):
+        self.classGramaticle = variableClassGramaticle
