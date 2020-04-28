@@ -41,6 +41,11 @@ file = open('DicoPyBook.json','r')
 
 data = json.load(file)
 
+
+
+
+
+
 k = "jsonIndex_"
 
 l = "cleDefinition"
