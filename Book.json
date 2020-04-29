@@ -1,5 +1,12 @@
 {
-    "teddy": {
-        "keyDef_0": "dksg"
+    "zacte": {
+        "keyDef_0": "Ce qui est fait par une personne dans la considération d'une finalité.",
+        "keyDef_1": "Document écrit qui constate et authentifie un fait, une convention.",
+        "keyDef_2": "Chacune des grandes divisions d'une pièce de théâtre."
+    },
+    "acte": {
+        "keyDef_0": "Ce qui est fait par une personne dans la considération d'une finalité.",
+        "keyDef_1": "Document écrit qui constate et authentifie un fait, une convention.",
+        "keyDef_2": "Chacune des grandes divisions d'une pièce de théâtre."
     }
 }

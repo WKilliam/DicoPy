@@ -21,8 +21,10 @@ FR = importer MotObject c'est un simple import de l'objet
 import json
 import os
 import os.path
+
 from MotObject import *
 from time import sleep
+
 
 """
 EN = this function transforms at file Type json
@@ -129,12 +131,11 @@ while toto:
       "\nplease select your command number :",
       "\n[1]you would like  add a word ?",
       "\n[2]you would like  search a word ?",
-      "\n[3]you would like  search a difinition ?",
-      "\n[4]you would like  print a dictionary from A to Z ?")
+      "\n[3]you would like  print a dictionary from A to Z ?")
     
     itxt = input()
     
-    swht = {1,2,3,4}
+    swht = {1,2,3}
     goodBad = False
     
     for s in swht:
@@ -213,15 +214,49 @@ if itxt == "1":
     
                     file.close()
             
-            result=input()
-            if result != "y":
-                acces = False
+            print("your word create with succes")
             
+            acces = False
+                        
 elif itxt == "2":
-    print("tu es au 2")
+    acces1 = True
+    while acces1:
+        key1 = "keyDef"
+        print("write the word searching :")
+        searchWord = input()
+        
+        file = open(nameRegist,'r')
+        
+        data = json.load(file)
+        
+        try:
+            if data[searchWord]:
+                print("the word is : ",searchWord,
+                      "\nAnd this is all definition")
+                i = 0
+                for k in data[searchWord]:
+                    
+                    print("\nDefinition number ",i," : ",data[searchWord][k])
+                    i += 1
+                
+                acces1=False
+                
+        except KeyError:
+            print("this word not existed")
+            acces1=False
+        file.close()
 elif itxt == "3":
-    print("valeur 3")
-elif itxt == "4":
-    print("vague 4")
+        os.system('clear')
+        sleep(0.5)
+    
+        file = open(nameRegist,'r')
+        
+        data = json.load(file)
+        
+        for k in sorted(data.keys()):
+            print("%s" % (k))
+        
+        
+   
     
 file.close()

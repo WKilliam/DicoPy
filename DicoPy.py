@@ -30,49 +30,27 @@ except sr.RequestError as e:
     '''
     
 
-itxt = "test"
-itxt2 = "test2"
-
-
-#print(otxt)
+from tkinter import *
 
 
 
+dico = Tk()
+dico.geometry("700x700")
+dico.title("DicoPyBook")
 
 
+champ_label = Label(dico, text="Bienvenu sur DicoPyBook ")
+
+buttonStart = Button(dico, text="FILE", fg="white", bg="red").place(x="350",y="350")
+#buttonStart.grid(row=0,column=4)
+
+#btn=tkinter.Button(dico, texte="yo")
+#btn.pack()
+buttonStart.pack()
+champ_label.pack(side=TOP)
 
 
-
-
-k = "jsonIndex_"
-
-l = "cleDefinition"
-
-data = {}
-
-print(len(data))
-
-
-data["%s_%s" % (k, itxt)]=itxt
-
-data["%s_%s" % (k, itxt2)]=itxt
-
-#data["%s_%s" % (k, itxt)]["%s_%s" % (l, itxt)] = itxt
-
-data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-
-print(data)
-
-#data["%s_%s" % (k, itxt)] = ["clé_E"] otxt
-
-print ()
-
-
-
-
-
-
-#print(data)
+dico.mainloop()
 
 
 
