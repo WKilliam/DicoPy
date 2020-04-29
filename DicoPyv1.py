@@ -22,7 +22,12 @@ import json
 import os
 import os.path
 from MotObject import *
+from time import sleep
 
+"""
+EN = this function transforms at file Type json
+FR = cette fonction transforme en fichier de type json
+"""
 def createFormatJsonType(filechecked,textError):
     
     file = open(filechecked, 'w')
@@ -31,7 +36,10 @@ def createFormatJsonType(filechecked,textError):
     file.close()
     print(textError)
     
-
+"""
+EN = this function create file .json
+FR = cette fonction cree un ficher en .json
+"""
 def createFile(nameFile):
     
     print("your file haven't find but this programme have create a new file for you")
@@ -39,28 +47,40 @@ def createFile(nameFile):
     fileCreate.close()
     
     
-    
+"""
+EN = this function check size of file,and if he are at json file 
+FR = cette fonction verifie la taille du fichier , et si il est un fichier json 
+"""
 def checkJsonType(filechecked):
+    
      
-        if(os.path.getsize(filechecked) == 0):
+    """
+    EN = condition check size file 
+    FR = verifie la taille du fichier 
+    """
+    if(os.path.getsize(filechecked) == 0):
             
-            Error = "this file was empty but this program write a good expresion"
-            createFormatJsonType(filechecked)
+        Error = "this file was empty but this program write a good expresion"
+        createFormatJsonType(filechecked,Error)
             
-        else:
-            try:
-                file = open(filechecked,'r')
-                data = json.load(file)
-                file.close()
-                print("json File detected and is good")
-            except json.JSONDecodeError as e:
-                print("your file isn't a json file ")
-                value = filechecked
-                Error2 = "this file having not good expression writed at format json he has rewriting"
-                createFormatJsonType(value,Error2)
-                checkJsonType(value)
-                
-                
+    else:
+        """
+        EN = this try check file inside at expresion and if isn't format json he started action creatFormatType ,and checkJsonType for test good proccess
+        FR = le try verifie l'expression à l'interieur du fichier et si il n'est pas au format json il demarre l'action creatFormatType ,and checkJsonType pour test le bon processus '
+        """
+        try:
+            file = open(filechecked,'r')
+            data = json.load(file)
+            if isinstance(data,dict) == False:
+                createFormatJsonType(filechecked, "Error inside text change")
+            file.close()
+            print("json File detected and is good")
+        except json.JSONDecodeError as e:
+            print("your file isn't a json file ")
+            value = filechecked
+            Error2 = "this file having not good expression writed at format json he has rewriting"
+            createFormatJsonType(value,Error2)
+            checkJsonType(value)
                 
 """
 EN = Check if dataValue existed 
@@ -89,27 +109,119 @@ def checkExistence(dataValue):
         
         checkExistence(fileCreatevariable)
         
-         
-checkExistence("Book.json")
-         
-"""
-  try:
-                file = open('DicoPyBook.json','r')
-                data = json.load(file)
-                print("toto")
-            except json.JSONDecodeError as e:
-                    print("ta fais uune gaffe")
-   
-                
-     else:
-        try:
-            file = open('DicoPyBook.json','r')
-            data = json.load(file)
-            print("toto")
-        except json.JSONDecodeError as e:
-                print("ta fais uune gaffe")
         
-else:
-    print("not")
+nameRegist = "Book.json"
+
+checkExistence(nameRegist)
+
+
+file = open(nameRegist,'r')
+
+data = json.load(file)
+
+print(type(data),"1")
+
+toto = True
+
+while toto:
     
-"""
+    print("\nhi your dictionary owns : ",len(data),"word" ,
+      "\nplease select your command number :",
+      "\n[1]you would like  add a word ?",
+      "\n[2]you would like  search a word ?",
+      "\n[3]you would like  search a difinition ?",
+      "\n[4]you would like  print a dictionary from A to Z ?")
+    
+    itxt = input()
+    
+    swht = {1,2,3,4}
+    goodBad = False
+    
+    for s in swht:
+        try:
+            if int(itxt) == s:
+                goodBad = True
+                break
+        except:
+            break
+    if goodBad:
+        toto = False
+        break
+    else:
+        print("your choise is not good ")
+    
+if itxt == "1":
+    acces = True
+    while acces:
+            print("you would like add a word please follow instructions")
+            os.system('clear')
+            sleep(0.5)
+            print("First write word :")
+            word = input()
+            os.system('clear')
+            sleep(0.5)
+            checker = True
+            while checker:
+                try:
+                    print("seconde write number definition of word => ",word ," : ")
+                    numberdef = int(input())
+                    break
+                except:
+                    print("please select number")
+                    os.system('clear')
+                    sleep(0.5)
+                    
+            
+            key1 = "keyDef"
+            
+            file = open(nameRegist,'r')
+            
+            data = json.load(file)
+            
+            data[word] = {}
+            
+            data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+            
+            file.close()
+    
+            file = open(nameRegist,'w')
+    
+            file.write(data)
+    
+            file.close()
+            
+            for defin in range(int(numberdef)):
+                    
+                    file = open(nameRegist,'r')
+    
+                    data = json.load(file)
+                    
+                    print("please write definition number ",defin ,word,"%s_%s" % (key1, defin))
+                    
+                    aDefinition = input()
+                     
+                    
+                    data[word]["%s_%s" % (key1,defin)]= aDefinition
+                    
+                    data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+                    
+                    file.close()
+    
+                    file = open(nameRegist,'w')
+    
+                    file.write(data)
+    
+                    file.close()
+            
+            result=input()
+            if result != "y":
+                acces = False
+            
+elif itxt == "2":
+    print("tu es au 2")
+elif itxt == "3":
+    print("valeur 3")
+elif itxt == "4":
+    print("vague 4")
+    
+file.close()

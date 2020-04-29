@@ -11,3 +11,4 @@ class MotObject:
     def __init__(self, variablemot, variableClassGramaticle):
         self.mot = variablemot
         self.classGramaticle = variableClassGramaticle
+        

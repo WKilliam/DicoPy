@@ -30,16 +30,14 @@ except sr.RequestError as e:
     '''
     
 
-itxt = input()
+itxt = "test"
+itxt2 = "test2"
 
-otxt = list(itxt)
 
 #print(otxt)
 
 
-file = open('DicoPyBook.json','r')
 
-data = json.load(file)
 
 
 
@@ -50,15 +48,18 @@ k = "jsonIndex_"
 
 l = "cleDefinition"
 
-#data = {}
+data = {}
 
 print(len(data))
 
 
-#data["%s_%s" % (k, itxt)]={"\n %s_%s" % (l, itxt):"nul"}
+data["%s_%s" % (k, itxt)]=itxt
+
+data["%s_%s" % (k, itxt2)]=itxt
 
 #data["%s_%s" % (k, itxt)]["%s_%s" % (l, itxt)] = itxt
 
+data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 
 print(data)
 
@@ -69,16 +70,9 @@ print ()
 
 
 
-data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+
 
 #print(data)
 
-file.close()
-
-file = open('DicoPyBook.json','w')
-
-file.write(data)
-
-file.close()
 
 
