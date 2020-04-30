@@ -23,6 +23,7 @@ import os
 import os.path
 from time import sleep
 from tkinter import *
+import speech_recognition as sr  
 
 nameRegist = "Book.json"
 
@@ -151,11 +152,6 @@ def AddDefFinish():
     capture.config(bg='white')
     button1.config(text = 'Add Word',command=lambda:addWord(nameRegist))
     
-    
-    #box.delete('0,0',END)
-    #button.config(dico,text = 'Submit',command= lambda:buttonSub(nameRegist))
-    #capture.config(dico, width=10,bg='white')
-    
 def pressAdd(nameRegist):
     
     take = capture.get()
@@ -215,10 +211,46 @@ def AddDef(nameRegist,take):
                 
     box.inster(END,"your word create with succes")
 
-
+def recognition(nameRegist):
+    
+        r  = sr.Recognizer()
+        
+        with sr.Microphone() as source:
+        
+            audio = r.listen(source)
+            try:
+                kiker = True
+                while kiker:
+                    text = r.recognize_google(audio)
+                    print("test ",text)
+                    box.insert(END,"you say : %s"%(text))
+                    text1 = "sumbit"
+                    text3 = "a to z"
+                    text4 = "clear"
+                    text8 = "leave"
+                    finality=text.lower()
+                    
+                    if finality == text8:
+                        kiker=False
+                    elif finality == text1:
+                        buttonSub(nameRegist)
+                    elif finality == text4:
+                        clearBox()
+                        
+            except sr.UnknownValueError:
+                print("this sound hasn't understand")
+            except sr.RequestError as e:
+                print("Le service Google Speech API ne fonctionne plus" + format(e))
+                
+def startrecognition(nameRegist):
+    #box.insert(END,"Please this is expression use : \nSubmit ,\nAdd Word ,\nfrom a to z,\nClear")
+    sleep(5)
+    recognition(nameRegist)
+    
 dico = Tk()
 dico.geometry("700x700")
 dico.title("DicoPyBook")
+checkExistence(nameRegist)
 champLabel = Label(dico,text="WELCOME TO DICOPYBOOK").pack()
 box=Text(dico,height=10, width=100)
 box.pack()
@@ -245,7 +277,7 @@ button1.pack()
 button2 = Button(dico,text = 'Print a dictionary from A to Z',command= lambda: buttonSubmitAZ(nameRegist))
 button2.pack()
 
-button3 = Button(dico,text = 'voice recognition')
+button3 = Button(dico,text = 'voice recognition',command=lambda:startrecognition(nameRegist))
 button3.pack()
 
 button4 = Button(dico,text = 'clear box text',command=clearBox)
@@ -255,190 +287,4 @@ capture2=Entry(dico,text="def", width=70,bg='green')
 capture2.pack()
 #saisie = tkinter.Entry ()
 dico.mainloop()
-   # file.close()          
-"""
-#checkExistence(nameRegist)
-dico = Tk()
-dico.geometry("700x700")
-dico.title("DicoPyBook")
-champ_label = Label(dico,  text="WELCOME TO DICOPY").pack()
-searchbox = Text(dico,height=10, width=100)
-
-searchbox.pack()
-
-text = "\nWelcome to DicoPy select your option please : "
-
-champ_label1 = Label(dico,  text=text).pack()
-
-text1 = "\nHere you have a Submit text \nIf you write text ,press Submit and a word is a data base \nThat definition appears above : "
-
-champ_label2 = Label(dico,  text=text1).pack()
-
-capture = Entry(dico, width=10)
-capture.pack()
-
-button = Button(dico,text = 'Submit',command= lambda:buttonSub(nameRegist))
-button.pack() 
-
-button1 = Button(dico,text = 'Add Word',command = buttonSubmit)
-button1.pack()
-
-button2 = Button(dico,text = 'Print a dictionary from A to Z',command= lambda: buttonSubmitAZ(nameRegist))
-button2.pack()
-
-button3 = Button(dico,text = 'voice recognition',command = buttonSubmit)
-button3.pack()
-
-#saisie = tkinter.Entry ()
-dico.mainloop()
-
-
-nameRegist = "Book.json"
-
-#checkExistence(nameRegist)
-
-
-file = open(nameRegist,'r')
-
-data = json.load(file)
-
-print(type(data),"1")
-
-toto = True
-
-while toto:
-    
-    print("\nhi your dictionary owns : ",len(data),"word" ,
-      "\nplease select your command number :",
-      "\n[1]you would like  add a word ?",
-      "\n[2]you would like  search a word ?",
-      "\n[3]you would like  print a dictionary from A to Z ?")
-    
-    itxt = input()
-    
-    swht = {1,2,3}
-    goodBad = False
-    
-    for s in swht:
-        try:
-            if int(itxt) == s:
-                goodBad = True
-                break
-        except:
-            break
-    if goodBad:
-        toto = False
-        break
-    else:
-        print("your choise is not good ")
-    
-if itxt == "1":
-    acces = True
-    while acces:
-            print("you would like add a word please follow instructions")
-            os.system('clear')
-            sleep(0.5)
-            print("First write word :")
-            word = input()
-            os.system('clear')
-            sleep(0.5)
-            checker = True
-            while checker:
-                try:
-                    print("seconde write number definition of word => ",word ," : ")
-                    numberdef = int(input())
-                    break
-                except:
-                    print("please select number")
-                    os.system('clear')
-                    sleep(0.5)
-                    
-            
-            key1 = "keyDef"
-            
-            file = open(nameRegist,'r')
-            
-            data = json.load(file)
-            
-            data[word] = {}
-            
-            data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-            
-            file.close()
-    
-            file = open(nameRegist,'w')
-    
-            file.write(data)
-    
-            file.close()
-            
-            for defin in range(int(numberdef)):
-                    
-                    file = open(nameRegist,'r')
-    
-                    data = json.load(file)
-                    
-                    print("please write definition number ",defin ,word)
-                    
-                    aDefinition = input()
-                     
-                    
-                    data[word]["%s_%s" % (key1,defin)]= aDefinition
-                    
-                    data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
-                    
-                    file.close()
-    
-                    file = open(nameRegist,'w')
-    
-                    file.write(data)
-    
-                    file.close()
-            
-            print("your word create with succes")
-            
-            acces = False
-                        
-elif itxt == "2":
-    acces1 = True
-    while acces1:
-        key1 = "keyDef"
-        print("write the word searching :")
-        searchWord = input()
-        
-        file = open(nameRegist,'r')
-        
-        data = json.load(file)
-        
-        try:
-            if data[searchWord]:
-                print("the word is : ",searchWord,
-                      "\nAnd this is all definition")
-                i = 0
-                for k in data[searchWord]:
-                    
-                    print("\nDefinition number ",i," : ",data[searchWord][k])
-                    i += 1
-                
-                acces1=False
-                
-        except KeyError:
-            print("this word not existed")
-            acces1=False
-        file.close()
-elif itxt == "3":
-        os.system('clear')
-        sleep(0.5)
-    
-        file = open(nameRegist,'r')
-        
-        data = json.load(file)
-        
-        for k in sorted(data.keys()):
-            print("%s" % (k))
-        
-        
-   
-    
-file.close()
-"""
+#file.close()          

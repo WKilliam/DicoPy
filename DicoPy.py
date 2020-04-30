@@ -1,101 +1,168 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+from bs4 import BeautifulSoup
+import urllib.request
+
+html_doc = """
+<html><head><title>The Dormouse's story</title></head>
+<body>
+<p class="title"><b>The Dormouse's story</b></p>
+
+<p class="story">Once upon a time there were three little sisters; and their names were
+<a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
+<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+and they lived at the bottom of a well.</p>
+
+<p class="story">...</p>
 """
-Created on Mon Apr 27 14:50:04 2020
+import urllib.request
 
-@author: teddy
-"""
-import json
-import os
-import speech_recognition as sr  
-
-'''
-r  = sr.Recognizer()
-with sr.Microphone() as source:
-    print("Dites quelque chose")
-    audio = r.listen(source)
-try:
-    text = r.recognize_google(audio, language="fr-FR")
-    text1 = text.lower()
-    toto = 'commande'
-    if(text1 == toto):
-        print('good')
-    print("Vous avez dit : " + text)
-except sr.UnknownValueError:
-    print("L'audio n'as pas été compris")
-except sr.RequestError as e:
-    print("Le service Google Speech API ne fonctionne plus" + format(e))
-'''
-    
+with urllib.request.urlopen('https://www.linternaute.fr/dictionnaire/fr/definition/a-bas/') as response:
+   html = response.read()
+   
 
 
-from tkinter import *
-from DicoPyv1 import *
+file = open("Html.txt",'a')
+file.close()
+file = open("Html.txt",'w')
+file.write(str(html))
+file.close()
+file = open("Html.txt",'r')
 
-def buttonSubmitAZ():
+tab = []
+for k in file:
+    tab.append(k)
+
+tabhtml = list(tab[0])
+#print(tabhtml)
+
+
+fin = 0
+
+
+for k in range(len(tabhtml)):
     
-    contenu = searchbox.get ()
+    #let = tabhtml.pop(0).lower()
+    tabtestingletter = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','<','>']
     
-    os.system('clear')
+    if tabhtml[k] in tabtestingletter:
+        fichier=open("htmlPurgeLv1.txt","a") # N'AFFICHE PAS LA LETTRE SUR LE RESULTAT SI c'est vrai 
+        fichier.write(tabhtml[k])
+        fichier.close()
+    else:
+        pass
+
+
+
+textpurge =  tabhtml
+
+
+tableaupropre = []
+
+
+for key in range(len(textpurge)):
     
-    sleep(0.5)
-    
-    file = open(nameRegist,'r')
+    if (textpurge[key]=='<' 
+        and textpurge[key+1]  == 's'
+        and textpurge[key+2]  == 'p'
+        and textpurge[key+3]  == 'a'
+        and textpurge[key+4]  == 'n'
+        and textpurge[key+5]  == ' '
+        and textpurge[key+6]  == 'c'
+        and textpurge[key+7]  == 'l'
+        and textpurge[key+8]  == 'a'
+        and textpurge[key+9]  == 's'
+        and textpurge[key+10] == 's'
+        and textpurge[key+11] == '='
+        and textpurge[key+12] == '"'
+        and textpurge[key+13] == 'd'
+        and textpurge[key+14] == 'i'
+        and textpurge[key+15] == 'c'
+        and textpurge[key+16] == 'o'
+        and textpurge[key+17] == '_'
+        and textpurge[key+18] == 't'
+        and textpurge[key+19] == 'i'
+        and textpurge[key+20] == 't'
+        and textpurge[key+21] == 'l'
+        and textpurge[key+22] == 'e'
+        and textpurge[key+23] == '_'
+        and textpurge[key+24] == '2'
+        and textpurge[key+25] == '"'
+        and textpurge[key+26] == '>'):
+        print("yes")
         
-    data = json.load(file)
+        keys = key
         
-    for k in sorted(data.keys()):
-        searchbox.insert(tkinter.END, "\n%s" % (k))
-        
-nameRegist = "Book.json"
+        for keys in range(len(textpurge)):
+            
+            tableaupropre.append(textpurge[keys])
+            
+            if(textpurge[keys]        =='<'
+               and textpurge[keys+1]  =='/' 
+               and textpurge[keys+2]  =='a' 
+               and textpurge[keys+3]  =='>' 
+               and textpurge[keys+4]  =='.' 
+               and textpurge[keys+5]  =='<' 
+               and textpurge[keys+6]  =='/' 
+               and textpurge[keys+7]  =='d' 
+               and textpurge[keys+8]  =='i'
+               and textpurge[keys+9]  =='v'
+               and textpurge[keys+10] =='>'):
+                break
+            
+newtab =[]
 
-#checkExistence(nameRegist)
+for i in range(len(tableaupropre)):
+    
+    tableaupropre[i].lstrip(' ')
+    
+    test = True
+    
+    if tableaupropre[i] == '<':
+        test= False
+        print("false")
+    elif tableaupropre[i] == '>':
+        test = True
+        print("true")
+    elif test == True:
+        newtab.append(tableaupropre[i])
 
 
-dico = Tk()
-dico.geometry("700x700")
-dico.title("DicoPyBook")
-champ_label = Label(dico,  text="WELCOME TO DICOPY").pack()
-searchbox = Text(dico,height=10, width=100)
+print(newtab)
+    
+print("succes !!!")  
 
-searchbox.pack()
+"""
+'<span class="dico_title_2">'
 
-text = "\nWelcome to DicoPy select your option please : "
+file.close()
 
-champ_label1 = Label(dico,  text=text).pack()
+file2 = open('text.txt','a')
 
-text1 = "\nHere you have a Submit text \nIf you write text ,press Submit and a word is a data base \nThat definition appears above : "
 
-champ_label2 = Label(dico,  text=text1).pack()
+file2.write(str(tableaupropre))
 
-capture = Entry(dico, width=10)
-capture.pack()
+file2.close()
 
-button = Button(dico,text = 'Submit',command = buttonSubmit)
-button.pack() 
 
-button1 = Button(dico,text = 'Add Word',command = buttonSubmit)
-button1.pack()
 
-button2 = Button(dico,text = 'Print a dictionary from A to Z',command = buttonSubmitAZ)
-button2.pack()
+file2 = open("htmlpurge.txt",'a')
 
-button3 = Button(dico,text = 'voice recognition',command = buttonSubmit)
-button3.pack()
+file2.write(str(tableaupropre))
 
-#saisie = tkinter.Entry ()
-dico.mainloop()
+file2.close
+
+file2 = open("htmlpurge.txt",'r')
+
+
+
+
+
+
+file2.close
 
 """
 
-def comd():
-    #contenu = saisie.get ()
-    #print(contenu)
-    #saisie.delete(0,tkinter.END)
-    searchbox.insert(tkinter.END, "kqgldgldjghkqjkqjg")
-    #searchbox.configure(state='disabled')
-    #searchbox.delete(0,tkinter.END)
-"""
+
 
 
 

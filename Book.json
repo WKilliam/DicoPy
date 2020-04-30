@@ -4,13 +4,14 @@
         "1": "Document \u00e9crit qui constate et authentifie un fait, une convention.",
         "2": "Chacune des grandes divisions d'une pi\u00e8ce de th\u00e9\u00e2tre."
     },
-    "kiki": {
-        "0": ""
+    "bonjour": {
+        "0": "Terme de salutation dont on se sert pendant la journ\u00e9e quand on aborde quelqu'un ou, moins souvent, quand on prend cong\u00e9 de quelqu'un : Bonjour, comment allez-vous ?"
     },
-    "lolo": {},
-    "zacte": {
-        "0": "Ce qui est fait par une personne dans la consid\u00e9ration d'une finalit\u00e9.",
-        "1": "Document \u00e9crit qui constate et authentifie un fait, une convention.",
-        "2": "Chacune des grandes divisions d'une pi\u00e8ce de th\u00e9\u00e2tre."
+    "test": {
+        "0": "test de mon programme",
+        "1": "test de mon programme definition 2"
+    },
+    "zoologiste": {
+        "0": "Sp\u00e9cialiste de zoologie."
     }
 }
