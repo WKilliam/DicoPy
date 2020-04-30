@@ -21,10 +21,10 @@ FR = importer MotObject c'est un simple import de l'objet
 import json
 import os
 import os.path
-
-from MotObject import *
 from time import sleep
+from tkinter import *
 
+nameRegist = "Book.json"
 
 """
 EN = this function transforms at file Type json
@@ -111,10 +111,191 @@ def checkExistence(dataValue):
         
         checkExistence(fileCreatevariable)
         
+def buttonSubmitAZ(nameRegist):
+    
+    file = open(nameRegist,'r')
         
+    data = json.load(file)
+        
+    for k in sorted(data.keys()):
+        box.insert(END, "%s-" % (k))
+        
+def buttonSub(nameRegist):
+    
+    file = open(nameRegist,'r')
+    data = json.load(file)
+    try:
+        value = capture.get()
+        if data[value]:
+           
+            box.insert(END,"\nThe word is : %s"%(value))
+            i = 0
+            for k in data[value]:
+                box.insert(END,"\nDefinition number %s : %s"%(i,data[value][k]))
+                i += 1
+    except KeyError:
+        box.insert(END,"\nThe word is not exist")
+    file.close()
+
+def clearBox():
+    box.delete('0.0', END)
+    
+def addWord(nameRegist):
+    box.insert(END,"\nYou would like add a word please follow instructions. \nWrite in yellow box your word and red box write number definition. \nIf you have finish press add")
+    capture.config(bg="yellow")
+    button.config(text="Add Word Submit",command=lambda:pressAdd(nameRegist))
+    
+def AddDefFinish():
+    button.config(text="Submit",command= lambda:buttonSub(nameRegist))
+    capture.delete(0,END)
+    capture.config(bg='white')
+    button1.config(text = 'Add Word',command=lambda:addWord(nameRegist))
+    
+    
+    #box.delete('0,0',END)
+    #button.config(dico,text = 'Submit',command= lambda:buttonSub(nameRegist))
+    #capture.config(dico, width=10,bg='white')
+    
+def pressAdd(nameRegist):
+    
+    take = capture.get()
+    takenumber = capture1.get()
+    
+    box.insert(END,"\nFirst write word : %s "%(take))
+    
+    file = open(nameRegist,'r')
+                
+    data = json.load(file)
+                
+    data[take] = {}
+                
+    data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+                
+    file.close()
+        
+    file = open(nameRegist,'w')
+        
+    file.write(data)
+        
+    file.close()
+                    
+    box.insert(END,"\nPlease write definition in green box and press add definition.\n If you have finish press finish Add")
+        
+    button.config(text="ADD Definition",command=lambda:AddDef(nameRegist,take))
+    
+    button1.config(text="Finish Add",command=AddDefFinish)
+    
+    
+def AddDef(nameRegist,take):
+    
+    file = open(nameRegist,'r')
+                
+    data = json.load(file)
+    
+    i = 0
+    for l in data[take]:
+        if data[take][l]:
+            i += 1
+    
+    aDefinition=capture2.get()
+    
+    data[take]["%s" % (i)]= aDefinition
+        
+    data = json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+        
+    file.close()
+    
+    file = open(nameRegist,'w')
+    
+    file.write(data)
+    
+    file.close()
+
+    print("your word create with succes")
+                
+    box.inster(END,"your word create with succes")
+
+
+dico = Tk()
+dico.geometry("700x700")
+dico.title("DicoPyBook")
+champLabel = Label(dico,text="WELCOME TO DICOPYBOOK").pack()
+box=Text(dico,height=10, width=100)
+box.pack()
+text = "\nWelcome to DicoPy select your option please : "
+
+champ_label1 = Label(dico,  text=text).pack()
+
+text1 = "\nHere you have a Submit text \nIf you write text ,press Submit and a word is a data base \nThat definition appears above : "
+
+champ_label2 = Label(dico,  text=text1).pack()
+
+capture = Entry(dico, width=10)
+capture.pack()
+
+capture1 = Spinbox(dico, from_=0, to=10)
+capture1.pack()
+
+button = Button(dico,text = 'Submit',command= lambda:buttonSub(nameRegist))
+button.pack() 
+
+button1 = Button(dico,text = 'Add Word',command=lambda:addWord(nameRegist))
+button1.pack()
+
+button2 = Button(dico,text = 'Print a dictionary from A to Z',command= lambda: buttonSubmitAZ(nameRegist))
+button2.pack()
+
+button3 = Button(dico,text = 'voice recognition')
+button3.pack()
+
+button4 = Button(dico,text = 'clear box text',command=clearBox)
+button4.pack()
+
+capture2=Entry(dico,text="def", width=70,bg='green')
+capture2.pack()
+#saisie = tkinter.Entry ()
+dico.mainloop()
+   # file.close()          
+"""
+#checkExistence(nameRegist)
+dico = Tk()
+dico.geometry("700x700")
+dico.title("DicoPyBook")
+champ_label = Label(dico,  text="WELCOME TO DICOPY").pack()
+searchbox = Text(dico,height=10, width=100)
+
+searchbox.pack()
+
+text = "\nWelcome to DicoPy select your option please : "
+
+champ_label1 = Label(dico,  text=text).pack()
+
+text1 = "\nHere you have a Submit text \nIf you write text ,press Submit and a word is a data base \nThat definition appears above : "
+
+champ_label2 = Label(dico,  text=text1).pack()
+
+capture = Entry(dico, width=10)
+capture.pack()
+
+button = Button(dico,text = 'Submit',command= lambda:buttonSub(nameRegist))
+button.pack() 
+
+button1 = Button(dico,text = 'Add Word',command = buttonSubmit)
+button1.pack()
+
+button2 = Button(dico,text = 'Print a dictionary from A to Z',command= lambda: buttonSubmitAZ(nameRegist))
+button2.pack()
+
+button3 = Button(dico,text = 'voice recognition',command = buttonSubmit)
+button3.pack()
+
+#saisie = tkinter.Entry ()
+dico.mainloop()
+
+
 nameRegist = "Book.json"
 
-checkExistence(nameRegist)
+#checkExistence(nameRegist)
 
 
 file = open(nameRegist,'r')
@@ -197,7 +378,7 @@ if itxt == "1":
     
                     data = json.load(file)
                     
-                    print("please write definition number ",defin ,word,"%s_%s" % (key1, defin))
+                    print("please write definition number ",defin ,word)
                     
                     aDefinition = input()
                      
@@ -260,3 +441,4 @@ elif itxt == "3":
    
     
 file.close()
+"""

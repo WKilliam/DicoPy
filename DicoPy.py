@@ -7,8 +7,6 @@ Created on Mon Apr 27 14:50:04 2020
 """
 import json
 import os
-from MotObject import *
-
 import speech_recognition as sr  
 
 '''
@@ -27,30 +25,77 @@ except sr.UnknownValueError:
     print("L'audio n'as pas été compris")
 except sr.RequestError as e:
     print("Le service Google Speech API ne fonctionne plus" + format(e))
-    '''
+'''
     
 
-from tkinter import *
 
+from tkinter import *
+from DicoPyv1 import *
+
+def buttonSubmitAZ():
+    
+    contenu = searchbox.get ()
+    
+    os.system('clear')
+    
+    sleep(0.5)
+    
+    file = open(nameRegist,'r')
+        
+    data = json.load(file)
+        
+    for k in sorted(data.keys()):
+        searchbox.insert(tkinter.END, "\n%s" % (k))
+        
+nameRegist = "Book.json"
+
+#checkExistence(nameRegist)
 
 
 dico = Tk()
 dico.geometry("700x700")
 dico.title("DicoPyBook")
+champ_label = Label(dico,  text="WELCOME TO DICOPY").pack()
+searchbox = Text(dico,height=10, width=100)
 
+searchbox.pack()
 
-champ_label = Label(dico, text="Bienvenu sur DicoPyBook ")
+text = "\nWelcome to DicoPy select your option please : "
 
-buttonStart = Button(dico, text="FILE", fg="white", bg="red").place(x="350",y="350")
-#buttonStart.grid(row=0,column=4)
+champ_label1 = Label(dico,  text=text).pack()
 
-#btn=tkinter.Button(dico, texte="yo")
-#btn.pack()
-buttonStart.pack()
-champ_label.pack(side=TOP)
+text1 = "\nHere you have a Submit text \nIf you write text ,press Submit and a word is a data base \nThat definition appears above : "
 
+champ_label2 = Label(dico,  text=text1).pack()
 
+capture = Entry(dico, width=10)
+capture.pack()
+
+button = Button(dico,text = 'Submit',command = buttonSubmit)
+button.pack() 
+
+button1 = Button(dico,text = 'Add Word',command = buttonSubmit)
+button1.pack()
+
+button2 = Button(dico,text = 'Print a dictionary from A to Z',command = buttonSubmitAZ)
+button2.pack()
+
+button3 = Button(dico,text = 'voice recognition',command = buttonSubmit)
+button3.pack()
+
+#saisie = tkinter.Entry ()
 dico.mainloop()
+
+"""
+
+def comd():
+    #contenu = saisie.get ()
+    #print(contenu)
+    #saisie.delete(0,tkinter.END)
+    searchbox.insert(tkinter.END, "kqgldgldjghkqjkqjg")
+    #searchbox.configure(state='disabled')
+    #searchbox.delete(0,tkinter.END)
+"""
 
 
 
