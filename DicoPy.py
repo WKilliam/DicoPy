@@ -109,40 +109,217 @@ for key in range(len(textpurge)):
                and textpurge[keys+10] =='>'):
                 break
             
-newtab =[]
+newtab = ''
 
 for i in range(len(tableaupropre)):
     
-    tableaupropre[i].lstrip(' ')
+    newtab = newtab + tableaupropre[i]
     
-    test = True
     
-    if tableaupropre[i] == '<':
-        test= False
-        print("false")
-    elif tableaupropre[i] == '>':
-        test = True
-        print("true")
-    elif test == True:
-        newtab.append(tableaupropre[i])
+
+for k in range(newtab.count('>\n')):
+    newtab.replace('>\n', '=', k)
+    print(k)
+
+    
 
 
-print(newtab)
-    
-print("succes !!!")  
-
-"""
 '<span class="dico_title_2">'
+
 
 file.close()
 
-file2 = open('text.txt','a')
 
 
-file2.write(str(tableaupropre))
+filea = open("test.txt","a")
 
-file2.close()
+filea.write(str(newtab))
 
+filea.close()
+
+filea = open("test.txt","r")
+
+ligne= filea.readlines()
+
+
+filea.close()
+
+ligne[0]= ligne[0].replace(' ', '')
+ligne[0]= ligne[0].replace('\n', '')
+ligne[0]= ligne[0].replace("[", '')
+ligne[0]= ligne[0].replace("ahref=", '')
+ligne[0]= ligne[0].replace("/dictionnaire/fr/definition/",'')
+ligne[0]= ligne[0].replace("@",'')
+
+ligne[0]= ligne[0].replace("/",'')
+ligne[0]= ligne[0].replace("//",'')
+ligne[0]= ligne[0].replace("///",'')
+ligne[0]= ligne[0].replace("////",'')
+ligne[0]= ligne[0].replace("_",'')
+ligne[0]= ligne[0].replace("=",'')
+ligne[0]= ligne[0].replace("'",'')
+ligne[0]= ligne[0].replace("&",'')
+ligne[0]= ligne[0].replace("#",'')
+ligne[0]= ligne[0].replace("||",'')
+ligne[0]= ligne[0].replace(";",'')
+ligne[0]= ligne[0].replace("$",'')
+ligne[0]= ligne[0].replace("%",'')
+ligne[0]= ligne[0].replace("+",'')
+ligne[0]= ligne[0].replace("*",'')
+ligne[0]= ligne[0].replace("!",'')
+
+ligne[0]= ligne[0].replace("?",'')
+
+ligne[0]= ligne[0].replace(".",'')
+
+ligne[0]= ligne[0].replace(",",'')
+
+ligne[0]= ligne[0].replace("}",'')
+ligne[0]= ligne[0].replace("{",'')
+ligne[0]= ligne[0].replace("]",'')
+ligne[0]= ligne[0].replace("[",'')
+
+ligne[0]= ligne[0].replace("(",'')
+ligne[0]= ligne[0].replace(")",'')
+ligne[0]= ligne[0].replace("0",'')
+ligne[0]= ligne[0].replace("1",'')
+ligne[0]= ligne[0].replace("2",'')
+ligne[0]= ligne[0].replace("3",'')
+ligne[0]= ligne[0].replace("4",'')
+ligne[0]= ligne[0].replace("5",'')
+ligne[0]= ligne[0].replace("6",'')
+ligne[0]= ligne[0].replace("7",'')
+ligne[0]= ligne[0].replace("8",'')
+ligne[0]= ligne[0].replace("9",'')
+ligne[0]= ligne[0].replace("-",'')
+
+ligne[0]= ligne[0].replace('"','')
+b='\\'
+ligne[0]= ligne[0].replace(":",'')
+ligne[0]= ligne[0].replace(b,'')
+
+#ligne[0]= ligne[0].replace('div class="grid_line gutter grid--norwd"','')
+
+
+    
+filea = open("test.txt","w")
+
+filea.write(str(ligne))
+
+filea.close()
+
+good = list(ligne[0])
+
+#print(good)
+
+hide =[]
+lol =""
+n = 0
+
+for h in range(len(good)):
+    
+    if good[h] == '>':
+        lol = lol + good[h]
+        hide.append(lol)
+        lol =""
+        n = 0
+    elif good[h] == '<' or n == 1:
+        lol = lol + good[h]
+        n = 1
+
+#print(hide)   
+
+delm=''
+
+for p in range(len(hide)):
+    delm=delm+hide[p]
+
+fileA = open("test2.txt","a")
+
+fileA.write(str(delm))
+
+fileA.close()
+
+fileA = open("test2.txt","r")
+
+ligneA= fileA.readlines()
+
+
+fileA.close()
+
+ligneA[0]= ligneA[0].replace('<a>', '')
+ligneA[0]= ligneA[0].replace('<li>', '')
+ligneA[0]= ligneA[0].replace('<div>', '')
+ligneA[0]= ligneA[0].replace('<script>', '')
+ligneA[0]= ligneA[0].replace('<em>', '')
+ligneA[0]= ligneA[0].replace('<ul>', '')
+ligneA[0]= ligneA[0].replace('<button>', '')
+ligneA[0]= ligneA[0].replace('<divclassccmcssoffcanvas>', '')
+ligneA[0]= ligneA[0].replace('<ulclassdicoliste>', '')
+
+ligneA[0]= ligneA[0].replace('<divclassgridleft>', '')
+ligneA[0]= ligneA[0].replace('<spanclassdicotitle>', '')
+ligneA[0]= ligneA[0].replace('<divclassgridlineguttergridnorwd>', '')
+ligneA[0]= ligneA[0].replace('<ulclassdicoliste>', '')
+
+ligneA[0]= ligneA[0].replace('<ifltIE>', '')
+ligneA[0]= ligneA[0].replace('<divclassgridlast>', '')
+ligneA[0]= ligneA[0].replace('<etreturngetrtoRGBivisiblefunctionereturne>', '')
+
+ligneA[0]= ligneA[0].replace('<httpswwwlinternautecomlifestylelist>', '')
+ligneA[0]= ligneA[0].replace('<nav>', '')
+ligneA[0]= ligneA[0].replace('<span>', '')
+ligneA[0]= ligneA[0].replace('<h>', '')
+ligneA[0]= ligneA[0].replace('<divclassgridlast>', '')
+
+ligneA[0]= ligneA[0].replace('<liclassfillin>', '')
+
+ligneA[0]= ligneA[0].replace('<legend>', '')
+
+ligneA[0]= ligneA[0].replace('<buttontypesubmit>', '')
+
+ligneA[0]= ligneA[0].replace('<section>', '')
+ligneA[0]= ligneA[0].replace('<from>', '')
+ligneA[0]= ligneA[0].replace('<svg>', '')
+ligneA[0]= ligneA[0].replace('<g>', '')
+ligneA[0]= ligneA[0].replace('<head>', '')
+
+ligneA[0]= ligneA[0].replace('<p>', '')
+
+ligneA[0]= ligneA[0].replace('<dividctnnativeatf>', '')
+
+ligneA[0]= ligneA[0].replace('<liclassjEventjEvenementdatakeyjContentEvenements>', '')
+
+fileA = open("test2.txt","w")
+
+fileA.write(str(ligneA))
+
+fileA.close()
+
+good2 = list(ligneA[0])
+
+#print(good2)
+
+hide2 =[]
+lol2 =""
+n2 = 0
+
+for h in range(len(good2)):
+    
+    if good2[h] == '>':
+        lol2 = lol2 + good2[h]
+        hide2.append(lol2)
+        lol2 =""
+        n2 = 0
+    elif good2[h] == '<' or n2 == 1:
+        lol2 = lol2 + good2[h]
+        n2 = 1
+        
+print(hide2)  
+#for j in range(len(ligne[0])):
+#    print()
+    
+"""
 
 
 file2 = open("htmlpurge.txt",'a')
@@ -152,17 +329,5 @@ file2.write(str(tableaupropre))
 file2.close
 
 file2 = open("htmlpurge.txt",'r')
-
-
-
-
-
-
 file2.close
-
 """
-
-
-
-
-
